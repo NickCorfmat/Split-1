@@ -1,11 +1,7 @@
-// Code Practice: Scrolling States
-// Name:
-// Date: 
-
 'use strict'
 
 const config = {
-    parent: 'phaser-game',  // for info text
+    parent: 'phaser-game',
     type: Phaser.AUTO,
     width: 400,
     height: 300,
