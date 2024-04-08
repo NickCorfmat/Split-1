@@ -6,18 +6,17 @@
 
 const config = {
     parent: 'phaser-game',  // for info text
-    type: Phaser.WEBGL,     // for tinting
+    type: Phaser.AUTO,
     width: 400,
     height: 300,
     pixelArt: true,
-    zoom: 2,
     physics: {
         default: "arcade",
         arcade: {
             debug: true
         }
     },
-    scene: [ Load, Play ]
+    scene: [ Load, ActOne, ActTwo, ActThree ]
 }
 
 const game = new Phaser.Game(config)
