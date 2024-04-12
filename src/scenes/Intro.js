@@ -1,6 +1,6 @@
-class ActOne extends Phaser.Scene {
+class Intro extends Phaser.Scene {
     constructor() {
-        super('actOneScene')
+        super('introScene')
     }
 
     init() {
@@ -8,26 +8,24 @@ class ActOne extends Phaser.Scene {
     }
 
     create() {
-        // background
-        this.cameras.main.setBackgroundColor(0xbf7530)
-        this.add.rectangle(50, 50, width - 100, height - 200, 0x80A689).setOrigin(0)
-        this.add.rectangle(650, height - 200, 150, 200, 0x80A689).setOrigin(0)
+        // set up keyboard input
+        cursors = this.input.keyboard.createCursorKeys()
+
+        this.wall = this.add.rectangle(0, 0, width, height - 150, 0xb5b5b5).setOrigin(0)
 
         // set custom world bounds
         this.physics.world.setBounds(50, 50, width - 100, height - 200)
 
-        // create player
-        this.player = this.physics.add.sprite(width/2, height/2, 'player', 1).setScale(2)
+        this.add.rectangle(700, 430, 80, 120, 0x000000)
+
+        this.player = this.physics.add.sprite(200, 500, 'player', 1).setScale(2)
         this.player.body.setCollideWorldBounds(true)
         this.player.body.setSize(32, 32).setOffset(8, 16)
-
-        // set up keyboard input
-        cursors = this.input.keyboard.createCursorKeys()
     }
 
     update() {
         if(Phaser.Input.Keyboard.JustDown(cursors.space)) {
-            this.scene.start("actTwoScene")
+            this.scene.start("actOneScene")
         }
 
         let playerVector = new Phaser.Math.Vector2(0, 0)
@@ -42,21 +40,9 @@ class ActOne extends Phaser.Scene {
             playerDirection = 'right'
         }
 
-        // handle up/down
-        if (cursors.up.isDown) {
-            playerVector.y = -1
-            playerDirection = 'up'
-        } else if (cursors.down.isDown) {
-            playerVector.y = 1
-            playerDirection = 'down'
-        }
-
-        playerVector.normalize()
-
         this.player.setVelocity(this.PLAYER_VELOCITY * playerVector.x, this.PLAYER_VELOCITY * playerVector.y)
 
         let playerMovement
         playerVector.length() ? playerMovement = 'walk' : playerMovement = 'idle'
-
     }
 }

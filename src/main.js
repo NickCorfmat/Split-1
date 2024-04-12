@@ -3,8 +3,8 @@
 const config = {
     parent: 'phaser-game',
     type: Phaser.AUTO,
-    width: 900,
-    height: 700,
+    width: 960,
+    height: 640,
     pixelArt: true,
     physics: {
         default: "arcade",
@@ -15,7 +15,7 @@ const config = {
     scale: {
         autoCenter: Phaser.Scale.CENTER_BOTH
     },
-    scene: [ Load, ActOne, ActTwo, ActThree ]
+    scene: [ Load, Cutscene, Intro, ActOne, ActTwo, ActThree ]
 }
 
 const game = new Phaser.Game(config)
