@@ -16,9 +16,9 @@ class Cutscene extends Phaser.Scene {
         // set up keyboard input
         cursors = this.input.keyboard.createCursorKeys()
 
-        this.pistol = this.add.sprite(width/2, height/2 - 30, 'pistol').setAlpha(0.5)
+        this.pistol = this.add.sprite(width/2, height/2 - 40, 'pistol').setAlpha(0.5)
 
-        this.instructionText = this.add.bitmapText(width/2, 420, 'pixel-gray', '', 24).setOrigin(0.5)
+        this.instructionText = this.add.bitmapText(width/2, 410, 'pixel-gray', '', 24).setOrigin(0.5)
 
         this.tweens.add({
             targets: this.pistol,
@@ -30,6 +30,12 @@ class Cutscene extends Phaser.Scene {
             ease: 'Linear',
             onComplete: () => {
                 this.instructionText.text = 'will you do it...?'
+                this.time.delayedCall((2000), () => {
+                    this.add.bitmapText(width/2, height - 80, 'pixel-gray', 'Continue [Space]', 14).setOrigin(0.5)
+                    this.input.keyboard.on('keydown-SPACE', function() {
+                        this.scene.start('actOneScene')
+                    }, this)
+                })
             }
         })
     }
