@@ -4,13 +4,12 @@ class ActOne extends Phaser.Scene {
     }
 
     init() {
-        this.PLAYER_VELOCITY = 150
         this.beerAcquired = false
     }
 
     create() {
         // set up keyboard input
-        cursors = this.input.keyboard.createCursorKeys()
+        this.keys = this.input.keyboard.createCursorKeys()
 
         // set custom world bounds
         this.physics.world.setBounds(20, 140, width - 40, height - 120)
@@ -38,16 +37,14 @@ class ActOne extends Phaser.Scene {
         this.shelves = this.add.group([aisle1, aisle2, aisle3, aisle4, aisle5, beerKeg, cashRegister])
 
         // create player
-        this.player = this.physics.add.sprite(width - 200, 500, 'player').setOrigin(0.5).setScale(0.4).setDepth(6)
-        this.player.body.setCollideWorldBounds(true)
-        this.player.body.setSize(50, 50).setOffset(300, 400)
+        this.player = new Player(this, width - 200, 500, 'player', 0, 'down')
 
         this.physics.add.collider(this.player, this.shelves)
     }
 
     update() {
-        if(Phaser.Input.Keyboard.JustDown(cursors.space)) {
-            this.scene.start("actTwoScene")
+        if(Phaser.Input.Keyboard.JustDown(this.keys.space)) {
+            this.scene.start("introScene")
         }
 
         if (this.player.y >= 420) {
@@ -58,28 +55,6 @@ class ActOne extends Phaser.Scene {
             this.player.setDepth(2)
         }
 
-        // player movement
-        let playerVector = new Phaser.Math.Vector2(0, 0)
-
-        // handle left/right
-        if (cursors.left.isDown) {
-            playerVector.x = -1
-            this.player.flipX = true
-        } else if (cursors.right.isDown) {
-            playerVector.x = 1
-            this.player.flipX = false
-        }
-
-        // handle up/down
-        if (cursors.up.isDown) {
-            playerVector.y = -1
-        } else if (cursors.down.isDown) {
-            playerVector.y = 1
-        }
-
-        playerVector.normalize()
-
-        this.player.setVelocity(this.PLAYER_VELOCITY * playerVector.x, this.PLAYER_VELOCITY * playerVector.y)
-
+        this.playerFSM.step()
     }
 }

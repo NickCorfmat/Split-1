@@ -37,11 +37,11 @@ class ActTwo extends Phaser.Scene {
         }, this)
 
         // set up keyboard input
-        cursors = this.input.keyboard.createCursorKeys()
+        this.keys = this.input.keyboard.createCursorKeys()
     }
 
     update() {
-        if(Phaser.Input.Keyboard.JustDown(cursors.space)) {
+        if(Phaser.Input.Keyboard.JustDown(this.keys.space)) {
             this.scene.start("actOneScene")
         }
     }
