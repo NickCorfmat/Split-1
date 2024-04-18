@@ -63,7 +63,10 @@ class ActThree extends Phaser.Scene {
             this.target.y = this.clerk.y - 90
             
         }
-        if (this.eventstart == true){
+        if (this.clerk.x <= this.game.config.width / 2){
+            this.speed = 1;
+        }
+        if (this.eventstart == true && this.progress > 2){
             this.clerk.x -= this.speed;
         }
         if (Phaser.Input.Keyboard.JustDown(this.keySPACE)){
