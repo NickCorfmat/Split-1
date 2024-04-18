@@ -3,18 +3,20 @@ class Cutscene extends Phaser.Scene {
         super('cutscene')
     }
 
-    init() {//data) {
-        //this.gunUpgrade = data
+    init(data) {
+        this.gunStage = data.gunStage
+        this.nextScene = data.nextScene
     }
 
     create() {
+        game.scale.resize(960, 640)
         // background
         this.cameras.main.setBackgroundColor(0x000000)
 
         this.cameras.main.fadeIn(3000, 0, 0, 0)
 
         // set up keyboard input
-        cursors = this.input.keyboard.createCursorKeys()
+        this.keys = this.input.keyboard.createCursorKeys()
 
         this.pistol = this.add.sprite(width/2, height/2 - 40, 'pistol').setAlpha(0.5)
 
@@ -33,7 +35,7 @@ class Cutscene extends Phaser.Scene {
                 this.time.delayedCall((2000), () => {
                     this.add.bitmapText(width/2, height - 80, 'pixel-gray', 'Continue [Space]', 14).setOrigin(0.5)
                     this.input.keyboard.on('keydown-SPACE', function() {
-                        this.scene.start('actOneScene')
+                        this.scene.start(this.nextScene)
                     }, this)
                 })
             }

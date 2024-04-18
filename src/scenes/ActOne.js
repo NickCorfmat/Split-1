@@ -7,8 +7,10 @@ class ActOne extends Phaser.Scene {
         this.questCompleted = false
         this.beerAcquired = false
         this.caught = false
+        this.missionComplete = false
         this.screenWidth = 720
         this.screenHeight = 480
+        this.scenePhase = 0
 
         // dialog constants
         this.DBOX_X = this.screenWidth/2// dialog box x-position
@@ -20,17 +22,15 @@ class ActOne extends Phaser.Scene {
         this.TEXT_SIZE = 18		        // text font size (in pixels)
         this.TEXT_MAX_WIDTH = 600	    // max width of text within box
 
-        this.NEXT_TEXT = '[SPACE]'	    // text to display for next prompt
+        this.NEXT_TEXT = ''	    // text to display for next prompt
         this.NEXT_X = 660			    // next text prompt x-position
         this.NEXT_Y = 585			    // next text prompt y-position
 
         this.LETTER_TIMER = 40		    // # ms each letter takes to "type" onscreen
 
         // dialog variables
-        this.dialogConvo = 0			// current "conversation"
         this.dialogLine = 0			    // current line of conversation
         this.dialogSpeaker = null		// current speaker
-        this.dialogLastSpeaker = null	// last speaker
         this.dialogTyping = false		// flag to lock player input while text is "typing"
         this.dialogText = null			// the actual dialog text
         this.nextText = null			// player prompt text to continue typing
@@ -81,7 +81,7 @@ class ActOne extends Phaser.Scene {
         let cashRegister = this.physics.add.sprite(620, 400, 'cashier').setOrigin(0.5).setScale(1.3).setImmovable(true)
         let clerk = this.physics.add.sprite(690, 400, 'clerk').setOrigin(0.5).setScale(2).setImmovable(true)
 
-        this.shelves = this.add.group([aisle1, aisle2, aisle3, aisle4, aisle5, liquorStand1, liquorStand2, liquorStand3, stand1, stand2, stand3, beerKeg, cashRegister])
+        this.shelves = this.add.group([aisle1, aisle2, aisle3, aisle4, aisle5, liquorStand1, liquorStand2, liquorStand3, stand1, stand2, stand3, beerKeg, cashRegister, clerk])
 
         // create player
         this.player = new Player(this, this.screenWidth - 200, this.screenHeight - 50, 'player', 0, 'up')
@@ -92,9 +92,14 @@ class ActOne extends Phaser.Scene {
         this.physics.add.overlap(this.player, beer)
         this.physics.world.on('overlap', (gameObject1, gameObject2, body1, body2) => {
             this.input.keyboard.on('keydown-SPACE', function() {
-                console.log('beer acquired')
-                this.beerAcquired = true
-                beer.destroy()
+                if (!this.beerAcquired) {
+                    this.add.sprite(620, 65, 'exit').setScale(2)
+                    console.log('beer acquired')
+                    this.beerAcquired = true
+                    beer.destroy()
+                    this.scenePhase++
+                    this.physics.world.setBounds(20, 140, this.screenWidth + 50, this.screenHeight - 140)
+                }
             }, this)
         })
 
@@ -103,15 +108,17 @@ class ActOne extends Phaser.Scene {
         this.dialogbox = this.add.sprite(this.DBOX_X, this.DBOX_Y, 'dialogbox').setOrigin(0.5).setScale(0.8, 0.6)
         this.dialogText = this.add.bitmapText(this.TEXT_X, this.TEXT_Y, this.DBOX_FONT, 'test', this.TEXT_SIZE)
         this.nextText = this.add.bitmapText(this.NEXT_X, this.NEXT_Y, this.DBOX_FONT, '', this.TEXT_SIZE)
-        this.typeText()
-
-        // ready the character dialog images offscreen
-        //this.homer = this.add.sprite(this.OFFSCREEN_X, this.DBOX_Y+8, 'homer').setOrigin(0, 1)
+        this.typeText(this.scenePhase)
     }
 
     update() {
-        if(this.questCompleted == true) {
-            this.scene.start("introScene")
+        if(this.beerAcquired && this.caught && this.player.x >= this.screenWidth + 40 && !this.missionComplete) {
+            this.missionComplete = true
+            this.player.setVisible(false)
+            this.cameras.main.fadeOut(2000, 0, 0, 0)
+            this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, (cam, effect) => {
+                this.scene.start('cutscene', { gunStage: 1, nextScene: 'actTwoScene' })
+            })
         }
 
         if (this.player.y >= 380) {
@@ -122,7 +129,8 @@ class ActOne extends Phaser.Scene {
             this.player.setDepth(2)
         }
 
-        if (this.beerAcquired && !this.caught && this.player.x >= 450 && this.player.y >= 400) {
+        if (this.beerAcquired && !this.caught && this.player.x >= 580 && this.player.y <= 270) {
+            this.typeText(this.scenePhase)
             console.log('hey put that back!')
             this.caught = true
         }
@@ -130,7 +138,7 @@ class ActOne extends Phaser.Scene {
         this.playerFSM.step()
     }
 
-    typeText() {
+    typeText(scenePhase) {
         // lock input while typing
         this.dialogTyping = true
 
@@ -138,89 +146,36 @@ class ActOne extends Phaser.Scene {
         this.dialogText.text = ''
         this.nextText.text = ''
 
-        // make sure there are lines left to read in this convo, otherwise jump to next convo
-        if(this.dialogLine > this.dialog[this.dialogConvo].length - 1) {
-            this.dialogLine = 0
-            // I increment the conversation count here...
-            // ..but you could create logic to exit if each conversation was self-contained
-            this.dialogConvo++
-        }
-        
-        // make sure we haven't run out of conversations...
-        if(this.dialogConvo >= this.dialog.length) {
-            // here I'm exiting the final conversation to return to the title...
-            // ...but you could add alternate logic if needed
-            console.log('End of Conversations')
-            // tween out prior speaker's image
-            if(this.dialogLastSpeaker) {
-                this.tweens.add({
-                    targets: this[this.dialogLastSpeaker],
-                    x: this.OFFSCREEN_X,
-                    duration: this.tweenDuration,
-                    ease: 'Linear',
-                    onComplete: () => {
-                        this.scene.start('titleScene')
-                    }
-                })
-            }
-            // make text box invisible
-            this.dialogbox.visible = false
+        // if not, set current speaker
+        this.dialogSpeaker = this.dialog[0][scenePhase]['speaker'] // conversation, line, speaker
 
-        } else {
-            // if not, set current speaker
-            this.dialogSpeaker = this.dialog[this.dialogConvo][this.dialogLine]['speaker']
-            // check if there's a new speaker (for exit/enter animations)
-            if(this.dialog[this.dialogConvo][this.dialogLine]['newSpeaker']) {
-                // tween out prior speaker's image
-                if(this.dialogLastSpeaker) {
-                    this.tweens.add({
-                        targets: this[this.dialogLastSpeaker],
-                        x: this.OFFSCREEN_X,
-                        duration: this.tweenDuration,
-                        ease: 'Linear'
-                    })
+        // build dialog (concatenate speaker + colon + line of text)
+        this.combinedDialog = this.dialog[0][scenePhase]['speaker'].toUpperCase() + ': ' + this.dialog[0][scenePhase]['dialog']
+
+        // create a timer to iterate through each letter in the dialog text
+        let currentChar = 0
+        this.textTimer = this.time.addEvent({
+            delay: this.LETTER_TIMER,
+            repeat: this.combinedDialog.length - 1,
+            callback: () => { 
+                // concatenate next letter from dialogLines
+                this.dialogText.text += this.combinedDialog[currentChar]
+                // advance character position
+                currentChar++
+                // check if timer has exhausted its repeats 
+                // (necessary since Phaser 3 no longer seems to have an onComplete event)
+                if(this.textTimer.getRepeatCount() == 0) {
+                    // show prompt for more text
+                    this.nextText = this.add.bitmapText(this.NEXT_X, this.NEXT_Y, this.DBOX_FONT, this.NEXT_TEXT, this.TEXT_SIZE).setOrigin(1)
+                    this.dialogTyping = false   // un-lock input
+                    this.textTimer.destroy()    // destroy timer
                 }
-                // tween in new speaker's image
-                this.tweens.add({
-                    targets: this[this.dialogSpeaker],
-                    x: this.DBOX_X + 50,
-                    duration: this.tweenDuration,
-                    ease: 'Linear'
-                })
-            }
-
-            // build dialog (concatenate speaker + colon + line of text)
-            this.combinedDialog = 
-                this.dialog[this.dialogConvo][this.dialogLine]['speaker'].toUpperCase() 
-                + ': ' 
-                + this.dialog[this.dialogConvo][this.dialogLine]['dialog']
-
-            // create a timer to iterate through each letter in the dialog text
-            let currentChar = 0
-            this.textTimer = this.time.addEvent({
-                delay: this.LETTER_TIMER,
-                repeat: this.combinedDialog.length - 1,
-                callback: () => { 
-                    // concatenate next letter from dialogLines
-                    this.dialogText.text += this.combinedDialog[currentChar]
-                    // advance character position
-                    currentChar++
-                    // check if timer has exhausted its repeats 
-                    // (necessary since Phaser 3 no longer seems to have an onComplete event)
-                    if(this.textTimer.getRepeatCount() == 0) {
-                        // show prompt for more text
-                        this.nextText = this.add.bitmapText(this.NEXT_X, this.NEXT_Y, this.DBOX_FONT, this.NEXT_TEXT, this.TEXT_SIZE).setOrigin(1)
-                        this.dialogTyping = false   // un-lock input
-                        this.textTimer.destroy()    // destroy timer
-                    }
-                },
-                callbackScope: this // keep Scene context
-            })
+            },
+            callbackScope: this // keep Scene context
+        })
             
-            // final cleanup before next iteration
-            this.dialogText.maxWidth = this.TEXT_MAX_WIDTH  // set bounds on dialog
-            this.dialogLine++                               // increment dialog line
-            this.dialogLastSpeaker = this.dialogSpeaker     // set past speaker
-        }
-    }
+        // final cleanup before next iteration
+        this.dialogText.maxWidth = this.TEXT_MAX_WIDTH  // set bounds on dialog
+        this.dialogLine++                               // increment dialog line
+     }
 }

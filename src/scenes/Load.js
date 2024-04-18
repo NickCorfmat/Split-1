@@ -18,6 +18,7 @@ class Load extends Phaser.Scene {
         this.load.image('cardboard', 'cardboard.png')
 
         // Chapter 1 Assets
+        this.load.image('exit', 'exit.png')
         this.load.image('store', 'store.png')
         this.load.image('aisle-1', 'aisle1.png')
         this.load.image('aisle-2', 'aisle2.png')
@@ -42,16 +43,27 @@ class Load extends Phaser.Scene {
     }
 
     create() {
-        // create animations
+        // player animations
         this.anims.create({ key: 'idle-left', frameRate: 0, repeat: -1, frames: this.anims.generateFrameNumbers('player', { start: 8, end: 8 }), })
         this.anims.create({ key: 'idle-right', frameRate: 0, repeat: -1, frames: this.anims.generateFrameNumbers('player', { start: 5, end: 5 }), })
         this.anims.create({ key: 'idle-up', frameRate: 0, repeat: -1, frames: this.anims.generateFrameNumbers('player', { start: 13, end: 13 }), })
         this.anims.create({ key: 'idle-down', frameRate: 0, repeat: -1, frames: this.anims.generateFrameNumbers('player', { start: 1, end: 1 }), })
-
         this.anims.create({ key: 'walk-left', frameRate: 8, repeat: -1, frames: this.anims.generateFrameNumbers('player', { start: 8, end: 11 }), })
         this.anims.create({ key: 'walk-right', frameRate: 8, repeat: -1, frames: this.anims.generateFrameNumbers('player', { start: 4, end: 7 }), })
         this.anims.create({ key: 'walk-up', frameRate: 8, repeat: -1, frames: this.anims.generateFrameNumbers('player', { start: 12, end: 15 }), })
         this.anims.create({ key: 'walk-down', frameRate: 8, repeat: -1, frames: this.anims.generateFrameNumbers('player', { start: 0, end: 3 }), })
+
+        // alley wall animation
+        this.anims.create({
+            key: 'wall-animate',
+            frameRate: 2,
+            frameRate: 3,
+            repeat: -1,
+            frames: this.anims.generateFrameNumbers('street-wall', {
+                start: 0,
+                end: 5
+            })
+        })
 
         // proceed once loading completes
         this.scene.start('actOneScene')
