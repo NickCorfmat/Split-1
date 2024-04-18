@@ -4,16 +4,19 @@ class ActOne extends Phaser.Scene {
     }
 
     init() {
-        this.questCompleted = false
+        this.screenWidth = 720
+        this.screenHeight = 480
+
+        // quest boolean flags
+        this.scenePhase = 0
         this.beerAcquired = false
         this.caught = false
         this.missionComplete = false
-        this.screenWidth = 720
-        this.screenHeight = 480
-        this.scenePhase = 0
+
+        // dialogue implementation adapted from Nathan Altice
 
         // dialog constants
-        this.DBOX_X = this.screenWidth/2// dialog box x-position
+        this.DBOX_X = 360               // dialog box x-position
         this.DBOX_Y = 545			    // dialog box y-position
         this.DBOX_FONT = 'pixel-white'	// dialog box font key
 
@@ -22,7 +25,7 @@ class ActOne extends Phaser.Scene {
         this.TEXT_SIZE = 18		        // text font size (in pixels)
         this.TEXT_MAX_WIDTH = 600	    // max width of text within box
 
-        this.NEXT_TEXT = ''	    // text to display for next prompt
+        this.NEXT_TEXT = ''	            // text to display for next prompt
         this.NEXT_X = 660			    // next text prompt x-position
         this.NEXT_Y = 585			    // next text prompt y-position
 
@@ -37,49 +40,44 @@ class ActOne extends Phaser.Scene {
     }
 
     create() {
+
+        // world setup
         game.scale.resize(this.screenWidth, 620)
-
-        // set custom world bounds
         this.physics.world.setBounds(20, 140, this.screenWidth - 40, this.screenHeight - 140)
-
-        // set up keyboard input
         this.keys = this.input.keyboard.createCursorKeys()
 
         // store setup
         this.add.sprite(0, 0, 'store').setOrigin(0).setScale(3.2)
+
         let aisle1 = this.physics.add.sprite(300, 140, 'aisle-1').setOrigin(0.5).setScale(1.5).setImmovable(true).setDepth(1)
-        aisle1.body.setSize(90, 30).setOffset(5, 20)
         let aisle2 = this.physics.add.sprite(620, 140, 'aisle-2').setOrigin(0.5).setScale(1.5).setImmovable(true).setDepth(1)
-        aisle2.body.setSize(90, 30).setOffset(5, 20)
         let aisle3 = this.physics.add.sprite(150, 270, 'aisle-3').setOrigin(0.5).setScale(1.5).setImmovable(true).setDepth(3)
-        aisle3.body.setSize(90, 30).setOffset(5, 20)
         let aisle4 = this.physics.add.sprite(150, 380, 'aisle-2').setOrigin(0.5).setScale(1.5).setImmovable(true).setDepth(5)
-        aisle4.body.setSize(90, 30).setOffset(5, 20)
         let aisle5 = this.physics.add.sprite(380, 380, 'aisle-1').setOrigin(0.5).setScale(1.5).setImmovable(true).setDepth(5)
-        aisle5.body.setSize(90, 30).setOffset(5, 20)
-
         let liquorStand1 = this.physics.add.sprite(85, 140, 'liquor-stand-2').setOrigin(0.5).setScale(1.5).setImmovable(true).setDepth(1)
-        liquorStand1.body.setSize(59, 30).setOffset(0, 20)
         let liquorStand2 = this.physics.add.sprite(500, 140, 'liquor-stand-1').setOrigin(0.5).setScale(1.5).setImmovable(true).setDepth(1)
-        liquorStand2.body.setSize(59, 30).setOffset(0, 20)
         let liquorStand3 = this.physics.add.sprite(350, 270, 'liquor-stand-2').setOrigin(0.5).setScale(1.5).setImmovable(true).setDepth(3)
-        liquorStand3.body.setSize(59, 30).setOffset(0, 20)
-
         let stand1 = this.physics.add.sprite(410, 140, 'stand-1').setOrigin(0.5).setScale(1.5).setImmovable(true).setDepth(1)
-        stand1.body.setSize(37, 30).setOffset(5, 20)
         let stand2 = this.physics.add.sprite(430, 270, 'stand-2').setOrigin(0.5).setScale(1.5).setImmovable(true).setDepth(3)
-        stand2.body.setSize(37, 30).setOffset(5, 20)
         let stand3 = this.physics.add.sprite(570, 270, 'stand-1').setOrigin(0.5).setScale(1.5).setImmovable(true).setDepth(3)
-        stand3.body.setSize(37, 30).setOffset(5, 20)
-
         let beerKeg = this.physics.add.sprite(180, 150, 'beer-keg').setOrigin(0.5).setScale(1.7).setImmovable(true)
-        beerKeg.body.setSize(35, 30).setOffset(2, 0)
-        
         let beer = this.physics.add.sprite(180, 100, 'beer').setOrigin(0.5).setScale(1.7).setImmovable(true)
-        beer.body.setSize(70, 70).setOffset(-23, -10)
-
         let cashRegister = this.physics.add.sprite(620, 400, 'cashier').setOrigin(0.5).setScale(1.3).setImmovable(true)
         let clerk = this.physics.add.sprite(690, 400, 'clerk').setOrigin(0.5).setScale(2).setImmovable(true)
+
+        aisle1.body.setSize(90, 30).setOffset(5, 20)
+        aisle2.body.setSize(90, 30).setOffset(5, 20)
+        aisle3.body.setSize(90, 30).setOffset(5, 20)
+        aisle4.body.setSize(90, 30).setOffset(5, 20)
+        aisle5.body.setSize(90, 30).setOffset(5, 20)
+        liquorStand1.body.setSize(59, 30).setOffset(0, 20)
+        liquorStand2.body.setSize(59, 30).setOffset(0, 20)
+        liquorStand3.body.setSize(59, 30).setOffset(0, 20)
+        stand1.body.setSize(37, 30).setOffset(5, 20)
+        stand2.body.setSize(37, 30).setOffset(5, 20)
+        stand3.body.setSize(37, 30).setOffset(5, 20)
+        beerKeg.body.setSize(35, 30).setOffset(2, 0)
+        beer.body.setSize(70, 70).setOffset(-23, -10)
 
         this.shelves = this.add.group([aisle1, aisle2, aisle3, aisle4, aisle5, liquorStand1, liquorStand2, liquorStand3, stand1, stand2, stand3, beerKeg, cashRegister, clerk])
 
@@ -94,7 +92,6 @@ class ActOne extends Phaser.Scene {
             this.input.keyboard.on('keydown-SPACE', function() {
                 if (!this.beerAcquired) {
                     this.add.sprite(620, 65, 'exit').setScale(2)
-                    console.log('beer acquired')
                     this.beerAcquired = true
                     beer.destroy()
                     this.scenePhase++
@@ -103,7 +100,7 @@ class ActOne extends Phaser.Scene {
             }, this)
         })
 
-        // Dialogue
+        // Dialogue initialization
         this.dialog = this.cache.json.get('dialog')
         this.dialogbox = this.add.sprite(this.DBOX_X, this.DBOX_Y, 'dialogbox').setOrigin(0.5).setScale(0.8, 0.6)
         this.dialogText = this.add.bitmapText(this.TEXT_X, this.TEXT_Y, this.DBOX_FONT, 'test', this.TEXT_SIZE)
@@ -131,7 +128,6 @@ class ActOne extends Phaser.Scene {
 
         if (this.beerAcquired && !this.caught && this.player.x >= 580 && this.player.y <= 270) {
             this.typeText(this.scenePhase)
-            console.log('hey put that back!')
             this.caught = true
         }
 
