@@ -114,7 +114,7 @@ class ActOne extends Phaser.Scene {
             this.player.setVisible(false)
             this.cameras.main.fadeOut(2000, 0, 0, 0)
             this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, (cam, effect) => {
-                this.scene.start('cutscene', { gunStage: 1, nextScene: 'actTwoScene' })
+                this.scene.start('cutscene', { gunStage: 2, nextScene: 'actTwoScene' })
             })
         }
 

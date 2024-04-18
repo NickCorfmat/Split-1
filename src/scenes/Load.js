@@ -10,12 +10,13 @@ class Load extends Phaser.Scene {
         this.load.json('dialog', 'json/dialog.json')
         this.load.image('dialogbox', 'dialogbox.png')
 
-        this.load.image('blue-paint', 'blue_paint.png')
-        this.load.image('purple-paint', 'purple_paint.png')
-        this.load.image('camera', 'camera.png')
-        this.load.image('pistol', 'pistol.png')
+        // Intro Assets
         this.load.image('storefront', 'storefront.png')
-        this.load.image('cardboard', 'cardboard.png')
+
+        // Cutscene Assets
+        this.load.image('gun-1', 'gun1.png')
+        this.load.image('gun-2', 'gun2.png')
+        this.load.image('gun-3', 'gun3.png')
 
         // Chapter 1 Assets
         this.load.image('exit', 'exit.png')
@@ -32,8 +33,13 @@ class Load extends Phaser.Scene {
         this.load.image('beer-keg', 'beerkeg.png')
         this.load.image('beer', 'beer.png')
 
+        // Chapter 2 Assets
+        this.load.image('blue-paint', 'blue_paint.png')
+        this.load.image('purple-paint', 'purple_paint.png')
+        this.load.image('cardboard', 'cardboard.png')
+
         // player animations
-        this.load.spritesheet('player', 'player.png', { frameWidth: 92, frameHeight: 120 })
+        this.load.spritesheet('player', 'player.png', { frameWidth: 23, frameHeight: 30 })
 
         this.load.spritesheet('street-wall', 'wall.png', { frameWidth: 512, frameHeight: 299 })
 
@@ -66,6 +72,6 @@ class Load extends Phaser.Scene {
         })
 
         // proceed once loading completes
-        this.scene.start('actOneScene')
+        this.scene.start('cutscene', { gunStage: 1, nextScene: 'introScene' })
     }
 }

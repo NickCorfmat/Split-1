@@ -2,10 +2,10 @@
 class Player extends Phaser.Physics.Arcade.Sprite {
     constructor(scene, x, y, texture, frame, direction) {
         super(scene, x, y, texture, frame)
-        scene.add.existing(this).setOrigin(0.5).setScale(0.6).setDepth(6)
-        scene.physics.add.existing(this).setOrigin(0.5).setScale(0.6).setDepth(6)
+        scene.add.existing(this).setOrigin(0.5).setScale(2).setDepth(6)
+        scene.physics.add.existing(this).setOrigin(0.5).setScale(2).setDepth(6)
 
-        this.body.setSize(50, 50).setOffset(20, 60)
+        this.body.setSize(15, 15).setOffset(5, 15)
         this.body.setCollideWorldBounds(true)
 
         // set custom Player properties
