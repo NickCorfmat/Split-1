@@ -34,8 +34,8 @@ class ActThree extends Phaser.Scene {
         // story text background
         this.textrect = this.add.rectangle(10, this.game.config.height - 120, this.game.config.width - 20, 100, 0x000000).setOrigin(0, 0)
         // story text
-        this.speakername = this.add.bitmapText(15, this.game.config.height - 110, 'pixel-white',"main character:", 12).setOrigin(0, 0)
-        this.speaking = this.add.bitmapText(15, this.game.config.height - 80, 'pixel-white',"something happend?", 12).setOrigin(0, 0)
+        this.speakername = this.add.bitmapText(15, this.game.config.height - 110, 'pixel-white',"Unknown : ", 12).setOrigin(0, 0)
+        this.speaking = this.add.bitmapText(15, this.game.config.height - 80, 'pixel-white',"Do you still remember the clerk you met before?", 12).setOrigin(0, 0)
         this.space = this.add.bitmapText(this.game.config.width - 100, this.game.config.height - 40, 'pixel-white', "[SPACE]", 12).setOrigin(0, 0)
 
         // event bar
@@ -96,12 +96,12 @@ class ActThree extends Phaser.Scene {
 
         // text update
         if (this.progress == 1){
-            this.speakername.text = "unknowen" + ": "
-            this.speaking.text = "what?"
+            this.speakername.text = "Ponyboy :"
+            this.speaking.text = "I still remember him, so what?"
         }
         if (this.progress == 2){
-            this.speakername.text = "main character" + ": "
-            this.speaking.text = "nothing"
+            this.speakername.text = "Unknown : "
+            this.speaking.text = "Kill Him"
             this.eventstart = true
         }
         // story end
