@@ -7,6 +7,9 @@ class Load extends Phaser.Scene {
         // load assets
         this.load.path = './assets/'
 
+        this.load.json('dialog', 'json/dialog.json')
+        this.load.image('dialogbox', 'dialogbox.png')
+
         this.load.image('blue-paint', 'blue_paint.png')
         this.load.image('purple-paint', 'purple_paint.png')
         this.load.image('camera', 'camera.png')
@@ -24,6 +27,7 @@ class Load extends Phaser.Scene {
         this.load.image('liquor-stand-1', 'liquorstand1.png')
         this.load.image('liquor-stand-2', 'liquorstand2.png')
         this.load.image('cashier', 'cashier.png')
+        this.load.image('clerk', 'clerk.png')
         this.load.image('beer-keg', 'beerkeg.png')
         this.load.image('beer', 'beer.png')
 

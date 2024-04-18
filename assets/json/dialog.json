@@ -1,0 +1,16 @@
+[
+	[
+		{
+			"speaker" : "Ponyboy",
+			"dialog" : "Ok, I gotta steal this beer without the clerk noticing...",
+			"newSpeaker" : "true"
+		}
+	],
+	[
+		{
+			"speaker" : "neptune",
+			"dialog" : "See now, how men lay blame upon us gods for what is after all nothing but their own folly.",
+			"newSpeaker" : "true"
+		}
+	]
+]
