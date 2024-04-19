@@ -15,8 +15,8 @@ class ActThree extends Phaser.Scene {
         this.kill = false;
         this.eventstart = false
         //background 
-        this.background_1_speed = 0.5
-        this.background_2_speed = 20
+        this.background_1_speed = 1
+        this.background_2_speed = 0.5
         // dialogue
         this.progress = 0
         // character move speed
@@ -28,8 +28,11 @@ class ActThree extends Phaser.Scene {
         this.keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE)
 
         //background
-        this.background1 = this.add.tileSprite(0, 0, 900, 700, 'scrolling').setOrigin(0, 0)
-        this.background2 = this.add.tileSprite(0, 0, 900, 700, 'scrolling2').setOrigin(0, 0)
+        this.cameras.main.setBackgroundColor(0x404040)
+        this.background1 = this.add.tileSprite(0, 120, 960, 300, 'scrolling-1').setOrigin(0, 0).setScale(2).setDepth(2)
+
+        // source: https://www.deviantart.com/plbeg/art/Street-Pixel-Art-739703149
+        this.background2 = this.add.tileSprite(0, 0, 1270, 400, 'scrolling-2').setOrigin(0, 0).setScale(1).setDepth(1)
 
         // story text background
         this.textrect = this.add.rectangle(10, this.game.config.height - 120, this.game.config.width - 20, 100, 0x000000).setOrigin(0, 0)

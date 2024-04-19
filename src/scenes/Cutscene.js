@@ -46,7 +46,7 @@ class Cutscene extends Phaser.Scene {
                 from: 2,
                 to: 4
             },
-            duration: 10,
+            duration: 5000,
             ease: 'Linear',
             onComplete: () => {
                 this.instructionText.text = this.text

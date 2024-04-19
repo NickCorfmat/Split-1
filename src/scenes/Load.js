@@ -38,6 +38,10 @@ class Load extends Phaser.Scene {
         this.load.image('purple-paint', 'purple_paint.png')
         this.load.image('cardboard', 'cardboard.png')
 
+        // Chapter 3 Assets
+        this.load.image('scrolling-1', 'scrolling1.png')
+        this.load.image('scrolling-2', 'scrolling2.png')
+
         // player animations
         this.load.spritesheet('player', 'player.png', { frameWidth: 23, frameHeight: 30 })
 
@@ -77,6 +81,7 @@ class Load extends Phaser.Scene {
         })
 
         // proceed once loading completes
-        this.scene.start('cutscene', { gunStage: 1, nextScene: 'introScene' })
+        this.scene.start("actThreeScene")
+        //this.scene.start('cutscene', { gunStage: 1, nextScene: 'introScene' })
     }
 }

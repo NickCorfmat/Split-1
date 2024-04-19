@@ -8,8 +8,10 @@ class Intro extends Phaser.Scene {
     }
 
     create() {
+        game.scale.resize(720, 620)
+
         // this.cameras.main.setBackgroundColor(0xbababa)
-        this.add.sprite(width/2 + 50, height/2, 'storefront').setOrigin(0.5).setScale(1.4)
+        this.add.sprite(0, 500, 'storefront').setOrigin(0, 1).setScale(1.2)
         // set up keyboard input
         this.keys = this.input.keyboard.createCursorKeys()
 
