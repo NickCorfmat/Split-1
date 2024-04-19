@@ -34,6 +34,8 @@ class Load extends Phaser.Scene {
         this.load.image('beer', 'beer.png')
 
         // Chapter 2 Assets
+        this.load.image('blue-spray', 'spray1.png')
+        this.load.image('purple-spray', 'spray2.png')
         this.load.image('blue-paint', 'blue_paint.png')
         this.load.image('purple-paint', 'purple_paint.png')
         this.load.image('cardboard', 'cardboard.png')
@@ -80,7 +82,7 @@ class Load extends Phaser.Scene {
         })
 
         // proceed once loading completes
-        this.scene.start("introScene")
+        this.scene.start("actTwoScene")
         //this.scene.start('cutscene', { gunStage: 1, nextScene: 'introScene' })
     }
 }

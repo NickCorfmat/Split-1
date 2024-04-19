@@ -47,21 +47,22 @@ class ActTwo extends Phaser.Scene {
             }
         }, this)
 
-        // this.purplePaint = this.add.sprite(150, height - 130, 'purple-paint').setScale(1.5).setDepth(4).setInteractive()
-        // this.purplePaint.on('pointerdown', () => {
-        //     this.paintColor = 'purple'
-        // })
+        this.add.sprite(115, 55, 'cardboard').setOrigin(0.5).setScale(2, 1.2).setDepth(1)
+        this.purplePaint = this.add.sprite(80, 50, 'purple-spray').setScale(2).setDepth(4).setAngle(30).setInteractive()
+        this.purplePaint.on('pointerdown', () => {
+            this.paintColor = 'purple'
+        })
 
-        // this.bluePaint = this.add.sprite(150, height - 70, 'blue-paint').setScale(1.5).setDepth(4).setInteractive()
-        // this.bluePaint.on('pointerdown', () => {
-        //     this.paintColor = 'blue'
-        // })
+        this.bluePaint = this.add.sprite(150, 55, 'blue-spray').setScale(2).setDepth(4).setAngle(30).setInteractive()
+        this.bluePaint.on('pointerdown', () => {
+            this.paintColor = 'blue'
+        })
 
-        // this.input.on('pointermove', pointer => {
-        //     if (pointer.isDown && pointer.x) {
+        this.input.on('pointermove', pointer => {
+            if (pointer.isDown && pointer.x) {
 
-        //     }
-        // }, this)
+            }
+        }, this)
 
         // set up keyboard input
         this.keys = this.input.keyboard.createCursorKeys()
