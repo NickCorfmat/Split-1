@@ -17,6 +17,8 @@ class Load extends Phaser.Scene {
         this.load.image('gun-1', 'gun1.png')
         this.load.image('gun-2', 'gun2.png')
         this.load.image('gun-3', 'gun3.png')
+        this.load.image('blood-drop', 'blood_drop.png')
+        this.load.image('blood-splatter', 'blood_splatter.png')
 
         // Chapter 1 Assets
         this.load.image('exit', 'exit.png')

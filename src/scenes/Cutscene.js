@@ -20,6 +20,12 @@ class Cutscene extends Phaser.Scene {
             case 2:
                 this.text = 'you\'re nervous...'
                 this.bgColor = 0x241a17
+                this.physics.add.sprite(510, 50, 'blood-drop').setVelocityY(12).setAlpha(0.4)
+                this.physics.add.sprite(100, 300, 'blood-drop').setVelocityY(12).setAlpha(0.4)
+                this.physics.add.sprite(710, 500, 'blood-drop').setVelocityY(6).setAlpha(0.4)
+                this.add.sprite(500, 50, 'blood-splatter').setAlpha(0.5).setAngle(20)
+                this.add.sprite(100, 300, 'blood-splatter').setAlpha(0.5).setAngle(150)
+                this.add.sprite(700, 500, 'blood-splatter').setAlpha(0.5).setAngle(45).setSize(2)
                 break
             case 3:
                 this.text = '\t\tI\'m unforgiving...'
