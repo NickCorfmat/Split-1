@@ -16,7 +16,7 @@ class ActThree extends Phaser.Scene {
         this.eventstart = false
         //background 
         this.background_1_speed = 1
-        this.background_2_speed = 0.5
+        this.background_2_speed = 3
         // dialogue
         this.progress = 0
         // character move speed
@@ -29,18 +29,24 @@ class ActThree extends Phaser.Scene {
 
         //background
         this.cameras.main.setBackgroundColor(0x404040)
-        this.background1 = this.add.tileSprite(0, 120, 960, 300, 'scrolling-1').setOrigin(0, 0).setScale(2).setDepth(2)
+        this.background1 = this.add.tileSprite(0, 0, this.game.config.width, this.game.config.height, 'scrolling-2').setOrigin(0, 0).setScale(1) // .setDepth(1)
         // source: https://www.deviantart.com/plbeg/art/Street-Pixel-Art-739703149
-        this.background2 = this.add.tileSprite(0, 0, 1270, 400, 'scrolling-2').setOrigin(0, 0).setScale(1).setDepth(1)
+        this.background2 = this.add.tileSprite(0, 100, this.game.config.width, this.game.config.height, 'scrolling-1').setOrigin(0, 0).setScale(2) // .setDepth(2)
 
-        this.add.sprite(0, 0, 'window').setOrigin(0).setScale(6.4).setDepth(3)
+        // clerk
+        this.clerk = this.add.image(this.game.config.width + 100, this.game.config.height - 320, 'clerk').setScale(5)
+        this.target = this.add.image(this.game.config.width + 100, this.game.config.height - 320, 'target').setScale(2)
+
+        // car windows
+        this.add.image(0, 0, 'window').setOrigin(0).setScale(6.4) // .setDepth(3)
 
         // story text background
         this.textrect = this.add.rectangle(10, this.game.config.height - 120, this.game.config.width - 20, 100, 0x000000).setOrigin(0, 0)
+        this.textrect.setStrokeStyle(2, 0xffffff)
         // story text
-        this.speakername = this.add.bitmapText(15, this.game.config.height - 110, 'pixel-white',"Unknown : ", 12).setOrigin(0, 0)
-        this.speaking = this.add.bitmapText(15, this.game.config.height - 80, 'pixel-white',"Do you still remember the clerk you met before?", 12).setOrigin(0, 0)
-        this.space = this.add.bitmapText(this.game.config.width - 100, this.game.config.height - 40, 'pixel-white', "[SPACE]", 12).setOrigin(0, 0)
+        this.speakername = this.add.bitmapText(15, this.game.config.height - 110, 'pixel-white',"Unknown : ", 15).setOrigin(0, 0)
+        this.speaking = this.add.bitmapText(15, this.game.config.height - 80, 'pixel-white',"Do you still remember the clerk you met before?", 15).setOrigin(0, 0)
+        this.space = this.add.bitmapText(this.game.config.width - 120, this.game.config.height - 40, 'pixel-white', "[SPACE]", 15).setOrigin(0, 0)
 
         // event bar
         this.bar = this.add.graphics()
@@ -48,9 +54,7 @@ class ActThree extends Phaser.Scene {
         // this.bar.x = this.game.config.width / 2
         // this.bar.y = this.game.config.height / 2
 
-        // clerk
-        this.clerk = this.add.image(this.game.config.width + 100, this.game.config.height - 320, 'clerk').setScale(5)
-        this.target = this.add.image(this.game.config.width + 100, this.game.config.height - 320, 'target').setScale(2)
+        
         
 
     }
