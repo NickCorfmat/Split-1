@@ -20,7 +20,7 @@ class ActThree extends Phaser.Scene {
         // dialogue
         this.progress = 0
         // character move speed
-        this.speed = 10;
+        this.speed = 18;
     }
 
     create() {
@@ -34,19 +34,19 @@ class ActThree extends Phaser.Scene {
         this.background2 = this.add.tileSprite(0, 100, this.game.config.width, this.game.config.height, 'scrolling-1').setOrigin(0, 0).setScale(2) // .setDepth(2)
 
         // clerk
-        this.clerk = this.add.image(this.game.config.width + 100, this.game.config.height - 320, 'clerk').setScale(5)
-        this.target = this.add.image(this.game.config.width + 100, this.game.config.height - 320, 'target').setScale(2)
+        this.clerk = this.add.image(-100, this.game.config.height - 280, 'clerk').setScale(4)
+        this.target = this.add.image(-100, this.game.config.height - 280, 'target').setScale(2)
 
         // car windows
         this.add.image(0, 0, 'window').setOrigin(0).setScale(6.4) // .setDepth(3)
 
         // story text background
-        this.textrect = this.add.rectangle(10, this.game.config.height - 120, this.game.config.width - 20, 100, 0x000000).setOrigin(0, 0)
-        this.textrect.setStrokeStyle(2, 0xffffff)
+        this.textrect = this.add.image(80, this.game.config.height - 240, 'dialogbox').setOrigin(0, 0)
+        //this.textrect.setStrokeStyle(2, 0xffffff)
         // story text
-        this.speakername = this.add.bitmapText(15, this.game.config.height - 110, 'pixel-white',"Unknown : ", 15).setOrigin(0, 0)
-        this.speaking = this.add.bitmapText(15, this.game.config.height - 80, 'pixel-white',"Do you still remember the clerk you met before?", 15).setOrigin(0, 0)
-        this.space = this.add.bitmapText(this.game.config.width - 120, this.game.config.height - 40, 'pixel-white', "[SPACE]", 15).setOrigin(0, 0)
+        this.speakername = this.add.bitmapText(100, this.game.config.height - 215, 'pixel-white',"Unknown : ", 18).setOrigin(0, 0)
+        this.speaking = this.add.bitmapText(100, this.game.config.height - 160, 'pixel-white',"Do you still remember the clerk you met before?", 16).setOrigin(0, 0)
+        this.space = this.add.bitmapText(this.game.config.width - 240, this.game.config.height - 80, 'pixel-white', "[SPACE]", 18).setOrigin(0, 0)
 
         // event bar
         this.bar = this.add.graphics()
@@ -67,15 +67,15 @@ class ActThree extends Phaser.Scene {
         if (this.waiting_time > this.waiting_time_before_start && this.eventstart == true){
             this.speed = 1;
             this.slow = true;
-            this.target.x = this.clerk.x - 20
-            this.target.y = this.clerk.y - 90
+            this.target.x = this.clerk.x - 15
+            this.target.y = this.clerk.y - 85
             
         }
-        if (this.clerk.x <= this.game.config.width / 2){
+        if (this.clerk.x >= this.game.config.width / 2){
             this.speed = 1;
         }
         if (this.eventstart == true && this.progress > 2){
-            this.clerk.x -= this.speed;
+            this.clerk.x += this.speed;
         }
         if (Phaser.Input.Keyboard.JustDown(this.keySPACE)){
             if (this.eventstart == true && this.waiting_time > this.waiting_time_before_start){
@@ -95,7 +95,9 @@ class ActThree extends Phaser.Scene {
         }
         if (this.wait < 0 && this.kill == false){
             this.add.rectangle(this.game.config.width / 2, this.game.config.height /2, this.game.config.width, this.game.config.height, 0x00ff00)
-            this.add.bitmapText(50, this.game.config.height /2, 'pixel-white', "YOU NOT KILL HIM", 48)
+            this.add.bitmapText(50, this.game.config.height / 4, 'pixel-white', "YOU NOT KILL HIM", 50)
+            this.add.bitmapText(50, this.game.config.height / 2, 'pixel-white', "A few days later,", 48)
+            this.add.bitmapText(50, this.game.config.height / 2 + 100, 'pixel-white', "you were arrested", 48)
         }
 
         // background moving
@@ -109,7 +111,7 @@ class ActThree extends Phaser.Scene {
         }
         if (this.progress == 2){
             this.speakername.text = "Unknown : "
-            this.speaking.text = "Kill Him"
+            this.speaking.text = "Kill Him ! ! !"
             this.eventstart = true
         }
         // story end
