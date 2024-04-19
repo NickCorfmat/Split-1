@@ -53,8 +53,6 @@ class Load extends Phaser.Scene {
         this.load.bitmapFont('pixel-white', 'font/pixel-white.png', 'font/pixel-white.xml')
 
         // Act three
-        this.load.image('scrolling', 'scrolling.png')
-        this.load.image('scrolling2', 'scrolling2.png')
         this.load.image('target', 'target.png')    
     }
 
