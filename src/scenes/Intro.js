@@ -26,6 +26,12 @@ class Intro extends Phaser.Scene {
         this.player = new Player(this, 130, 410, 'player', 0, 'left')
 
         this.enterStoreText = this.add.bitmapText(620, 250, 'pixel-white', 'Enter\n[Space]', 18).setOrigin(0.5)
+
+        // text box
+        this.textrect = this.physics.add.sprite(30, this.game.config.height - 180, 'dialogbox').setOrigin(0, 0).setScale(0.8).setImmovable(true).setDepth(2)
+        this.Text = this.add.bitmapText(50, this.game.config.height - 150, 'pixel-white', 'Mission :', 18).setOrigin(0,0).setDepth(3)
+        this.Text = this.add.bitmapText(50, this.game.config.height - 100, 'pixel-white', 'Entering the store and steal the beer', 16).setOrigin(0, 0).setDepth(3)
+        this.player.setDepth(1)
     }
 
     update() {
@@ -40,5 +46,6 @@ class Intro extends Phaser.Scene {
         }
 
         this.playerFSM.step()
+
     }
 }
