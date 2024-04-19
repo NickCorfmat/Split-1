@@ -5,7 +5,7 @@ class ActThree extends Phaser.Scene {
 
     init() {
         // QTE value
-        this.wait = 110
+        this.wait = 150
         this.starting_waiting_time = this.wait
         this.barlenght = 300
         this.waiting_time = 0
@@ -53,8 +53,8 @@ class ActThree extends Phaser.Scene {
         this.wait_text = this.add.bitmapText(this.game.config.height / 2 + this.barlenght + 25, this.game.config.width / 2 - 10, 'pixel-white', "", 24).setOrigin(0, 0)   
         
         // text
-        this.sp_box = this.add.rectangle(this.game.config.width + 100, 80, 300, 50, 0x000000, 0.5).setOrigin(0, 0).setStrokeStyle(1, 0xffffff)
-        this.sp = this.add.bitmapText(this.game.config.width / 2 - 150, 100, 'pixel-white', " ", 18)
+        this.sp_box = this.add.rectangle(this.game.config.width + 60, 202, 300, 50, 0x000000, 0.5).setOrigin(0, 0).setStrokeStyle(1, 0xffffff)
+        this.sp = this.add.bitmapText(this.game.config.width / 2 - 150, 220, 'pixel-white', " ", 18)
     }
 
     update() {
