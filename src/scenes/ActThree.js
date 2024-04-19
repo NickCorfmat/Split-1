@@ -50,13 +50,17 @@ class ActThree extends Phaser.Scene {
 
         // event bar
         this.bar = this.add.graphics()
-        this.wait_text = this.add.bitmapText(this.game.config.height / 2 + this.barlenght + 25, this.game.config.width / 2 - 10, 'pixel-white', "", 24)    
+        this.wait_text = this.add.bitmapText(this.game.config.height / 2 + this.barlenght + 25, this.game.config.width / 2 - 10, 'pixel-white', "", 24).setOrigin(0, 0)   
+        
+        // text
+        this.sp = this.add.bitmapText(this.game.config.width / 2 - 160, this.game.config.height / 2 + 190, 'pixel-white', " ", 18)
     }
 
     update() {
         if (this.slow == true){
             this.drawthebar()
             this.wait -= 1;
+            this.sp.text = "[SPACE]"
         }
         if (this.waiting_time > this.waiting_time_before_start && this.eventstart == true){
             this.speed = 1;
