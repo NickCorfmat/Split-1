@@ -4,6 +4,10 @@ class ActTwo extends Phaser.Scene {
     }
 
     init() {
+        // timing system
+        this.second = 0;
+        this.ending_time = 300; // 30 second
+
         this.scenePhase = 0
 
         // dialog constants
@@ -31,7 +35,7 @@ class ActTwo extends Phaser.Scene {
     }
 
     create() {
-        this.wall = this.add.sprite(width/2, height/2, 'street-wall').setOrigin(0.5).setScale(1.9, 2.2)
+        this.wall = this.add.sprite(width/2, height/2, 'street-wall').setOrigin(0.5).setScale(1.9, 2.2).setDepth(1)
         this.wall.play('wall-animate')
 
         //this.palette = this.add.sprite(120, height - 100, 'cardboard').setScale(2).setOrigin(0.5).setDepth(3)
@@ -39,7 +43,7 @@ class ActTwo extends Phaser.Scene {
         this.paintColor = 'purple'
 
         // code adapted from Phaser Example: https://labs.phaser.io/view.html?src=src/game%20objects/render%20texture/paint.js
-        const paintStroke = this.add.renderTexture(480, 245, 960, 490)
+        const paintStroke = this.add.renderTexture(480, 245, 960, 490).setDepth(2)
 
         this.input.on('pointermove', pointer => {
             if (pointer.isDown) {
@@ -47,7 +51,7 @@ class ActTwo extends Phaser.Scene {
             }
         }, this)
 
-        this.add.sprite(115, 55, 'cardboard').setOrigin(0.5).setScale(2, 1.2).setDepth(1)
+        this.add.sprite(115, 55, 'cardboard').setOrigin(0.5).setScale(2, 1.2).setDepth(2)
         this.purplePaint = this.add.sprite(80, 50, 'purple-spray').setScale(2).setDepth(4).setAngle(30).setInteractive()
         this.purplePaint.on('pointerdown', () => {
             this.paintColor = 'purple'
@@ -69,16 +73,40 @@ class ActTwo extends Phaser.Scene {
 
         // Dialogue
         this.dialog = this.cache.json.get('dialog')
-        this.dialogbox = this.add.sprite(this.DBOX_X, this.DBOX_Y, 'dialogbox').setOrigin(0.5).setScale(0.8, 0.6)
-        this.dialogText = this.add.bitmapText(this.TEXT_X, this.TEXT_Y, this.DBOX_FONT, 'test', this.TEXT_SIZE)
-        this.nextText = this.add.bitmapText(this.NEXT_X, this.NEXT_Y, this.DBOX_FONT, '', this.TEXT_SIZE)
+        this.dialogbox = this.add.sprite(this.DBOX_X, this.DBOX_Y, 'dialogbox').setOrigin(0.5).setScale(0.8, 0.6).setDepth(3)
+        this.dialogText = this.add.bitmapText(this.TEXT_X, this.TEXT_Y, this.DBOX_FONT, 'test', this.TEXT_SIZE).setDepth(4)
+        this.nextText = this.add.bitmapText(this.NEXT_X, this.NEXT_Y, this.DBOX_FONT, '', this.TEXT_SIZE).setDepth(4)
         this.typeText(this.scenePhase)
+
+        // timer
+        this.timing_box = this.add.rectangle(this.game.config.width - 150, 30, 105, 50, 0x000000).setOrigin(0, 0).setDepth(4).setStrokeStyle(1, 0xffffff)
+        this.timing_text = this.add.bitmapText(this.game.config.width - 145, 45, 'pixel-white', this.ending_time / 10, 24).setDepth(5)
+
+        this.timing = this.time.addEvent({
+            delay: 100,
+            loop: true,
+            callback: () =>
+            {
+                this.second += 1
+            }
+        });
+
+        
     }
 
     update() {
-        if(Phaser.Input.Keyboard.JustDown(this.keys.space)) {
+        // if(Phaser.Input.Keyboard.JustDown(this.keys.space)) {
+        //     this.scene.start('cutscene', { gunStage: 3, nextScene: 'actThreeScene' })
+        // }
+
+        // time counting
+        this.timing_text.text = (this.ending_time - this.second) / 10
+
+        // ending the scene
+        if (this.ending_time <= this.second){
             this.scene.start('cutscene', { gunStage: 3, nextScene: 'actThreeScene' })
         }
+
     }
 
     typeText(scenePhase) {
