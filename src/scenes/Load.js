@@ -41,6 +41,7 @@ class Load extends Phaser.Scene {
         // Chapter 3 Assets
         this.load.image('scrolling-1', 'scrolling1.png')
         this.load.image('scrolling-2', 'scrolling2.png')
+        this.load.image('window', 'window.png')
 
         // player animations
         this.load.spritesheet('player', 'player.png', { frameWidth: 23, frameHeight: 30 })

@@ -30,9 +30,10 @@ class ActThree extends Phaser.Scene {
         //background
         this.cameras.main.setBackgroundColor(0x404040)
         this.background1 = this.add.tileSprite(0, 120, 960, 300, 'scrolling-1').setOrigin(0, 0).setScale(2).setDepth(2)
-
         // source: https://www.deviantart.com/plbeg/art/Street-Pixel-Art-739703149
         this.background2 = this.add.tileSprite(0, 0, 1270, 400, 'scrolling-2').setOrigin(0, 0).setScale(1).setDepth(1)
+
+        this.add.sprite(0, 0, 'window').setOrigin(0).setScale(6.4).setDepth(3)
 
         // story text background
         this.textrect = this.add.rectangle(10, this.game.config.height - 120, this.game.config.width - 20, 100, 0x000000).setOrigin(0, 0)
