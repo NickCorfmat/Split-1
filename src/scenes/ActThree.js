@@ -16,7 +16,7 @@ class ActThree extends Phaser.Scene {
         this.eventstart = false
         //background 
         this.background_1_speed = 1
-        this.background_2_speed = 3
+        this.background_2_speed = 1.5
         // dialogue
         this.progress = 0
         // character move speed

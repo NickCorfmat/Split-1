@@ -12,23 +12,25 @@ class Intro extends Phaser.Scene {
 
         // this.cameras.main.setBackgroundColor(0xbababa)
         this.add.sprite(0, 500, 'storefront').setOrigin(0, 1).setScale(1.2)
+        this.add.rectangle(360, height - 110, 720, 120, 0x323254)
+        this.add.rectangle(360, height - 40, 720, 40, 0x9fb4c4)
         // set up keyboard input
         this.keys = this.input.keyboard.createCursorKeys()
 
         // this.wall = this.add.rectangle(0, 0, width, height - 150, 0xABCA).setOrigin(0)
 
         // set custom world bounds
-        this.physics.world.setBounds(0, 570, width, 50)
+        this.physics.world.setBounds(0, 440, width, 30)
 
         // this.add.rectangle(700, 415, 110, 150, 0x000000)
 
-        this.player = new Player(this, 200, 580, 'player', 0, 'right')
+        this.player = new Player(this, 200, 530, 'player', 0, 'right')
 
-        this.enterStoreText = this.add.bitmapText(710, 340, 'pixel-white', 'Enter Store [Space]', 18).setOrigin(0.5)
+        this.enterStoreText = this.add.bitmapText(530, 280, 'pixel-white', 'Enter Store [Space]', 18).setOrigin(0.5)
     }
 
     update() {
-        if (this.player.x >= 650 && this.player.x <= 730) {
+        if (this.player.x >= 490 && this.player.x <= 570) {
             this.enterStoreText.setAlpha(1)
 
             if(Phaser.Input.Keyboard.JustDown(this.keys.space)) {

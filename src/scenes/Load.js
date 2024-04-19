@@ -80,7 +80,7 @@ class Load extends Phaser.Scene {
         })
 
         // proceed once loading completes
-        this.scene.start("actThreeScene")
+        this.scene.start("introScene")
         //this.scene.start('cutscene', { gunStage: 1, nextScene: 'introScene' })
     }
 }
