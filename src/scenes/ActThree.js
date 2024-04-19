@@ -41,12 +41,12 @@ class ActThree extends Phaser.Scene {
         this.add.image(0, 0, 'window').setOrigin(0).setScale(6.4) // .setDepth(3)
 
         // story text background
-        this.textrect = this.add.image(80, this.game.config.height - 240, 'dialogbox').setOrigin(0, 0)
+        this.textrect = this.add.image(width/2, this.game.config.height - 110, 'dialogbox').setOrigin(0.5).setScale(1.1, 0.8)
         //this.textrect.setStrokeStyle(2, 0xffffff)
         // story text
-        this.speakername = this.add.bitmapText(105, this.game.config.height - 210, 'pixel-white',"Ponyboy: ", 18).setOrigin(0, 0)
-        this.speaking = this.add.bitmapText(100, this.game.config.height - 160, 'pixel-white',"Do you still remember the clerk you met before?", 16).setOrigin(0, 0)
-        this.space = this.add.bitmapText(this.game.config.width - 240, this.game.config.height - 80, 'pixel-white', "[SPACE]", 18).setOrigin(0, 0)
+        this.speakername = this.add.bitmapText(70, this.game.config.height - 155, 'pixel-white',"Gang Leader: ", 18).setOrigin(0, 0)
+        this.speaking = this.add.bitmapText(70, this.game.config.height - 120, 'pixel-white',"Hey Ponyboy, you remember that clerk from before?", 16).setOrigin(0, 0)
+        this.space = this.add.bitmapText(this.game.config.width - 200, this.game.config.height - 80, 'pixel-white', "[SPACE]", 18).setOrigin(0, 0)
 
         // event bar
         this.bar = this.add.graphics()
@@ -98,10 +98,12 @@ class ActThree extends Phaser.Scene {
 
         // text update
         if (this.progress == 1){
-            this.speaking.text = "I still remember him, so what?"
+            this.speakername.text = 'Ponyboy:'
+            this.speaking.text = "Yeah what about him...?"
         }
         if (this.progress == 2){
-            this.speaking.text = "Kill Him ! ! !"
+            this.speakername.text = 'Gang Leader:'
+            this.speaking.text = "That gun I gave you... kill him..."
             this.eventstart = true
         }
         // story end

@@ -6,7 +6,7 @@ class ActTwo extends Phaser.Scene {
     init() {
         // timing system
         this.second = 0;
-        this.ending_time = 300; // 30 second
+        this.ending_time = 450; // 45 second
 
         this.scenePhase = 0
 
@@ -62,12 +62,6 @@ class ActTwo extends Phaser.Scene {
             this.paintColor = 'blue'
         })
 
-        this.input.on('pointermove', pointer => {
-            if (pointer.isDown && pointer.x) {
-
-            }
-        }, this)
-
         // set up keyboard input
         this.keys = this.input.keyboard.createCursorKeys()
 
@@ -79,8 +73,8 @@ class ActTwo extends Phaser.Scene {
         this.typeText(this.scenePhase)
 
         // timer
-        this.timing_box = this.add.rectangle(this.game.config.width - 150, 30, 105, 50, 0x000000).setOrigin(0, 0).setDepth(4).setStrokeStyle(1, 0xffffff)
-        this.timing_text = this.add.bitmapText(this.game.config.width - 145, 45, 'pixel-white', this.ending_time / 10, 24).setDepth(5)
+        this.timing_box = this.add.rectangle(265, 30, 485, 50, 0x000000, 0.5).setOrigin(0, 0).setDepth(4).setStrokeStyle(3, 0xffffff, 0.5)
+        this.timing_text = this.add.bitmapText(280, 45, 'pixel-white', 'Cops arrive in: ' + Math.floor(this.ending_time / 10) + 's', 24).setDepth(5)
 
         this.timing = this.time.addEvent({
             delay: 100,
@@ -100,7 +94,7 @@ class ActTwo extends Phaser.Scene {
         // }
 
         // time counting
-        this.timing_text.text = (this.ending_time - this.second) / 10
+        this.timing_text.text = 'Cops arrive in: ' + Math.floor((this.ending_time - this.second) / 10) + 's'
 
         // ending the scene
         if (this.ending_time <= this.second){

@@ -89,6 +89,8 @@ class ActOne extends Phaser.Scene {
         this.player.body.onOverlap = true
         this.physics.add.overlap(this.player, beer)
         this.physics.world.on('overlap', (gameObject1, gameObject2, body1, body2) => {
+            this.grabBeerText.setVisible(true)
+
             this.input.keyboard.on('keydown-SPACE', function() {
                 if (!this.beerAcquired) {
                     this.add.sprite(620, 65, 'exit').setScale(2)
@@ -96,9 +98,12 @@ class ActOne extends Phaser.Scene {
                     beer.destroy()
                     this.scenePhase++
                     this.physics.world.setBounds(20, 140, this.screenWidth + 50, this.screenHeight - 140)
+                    this.grabBeerText.setVisible(false)
                 }
             }, this)
         })
+
+        this.grabBeerText = this.add.bitmapText(220, 210, 'pixel-white', 'Grab\n[Space]', 18).setOrigin(0.5).setVisible(false)
 
         // Dialogue initialization
         this.dialog = this.cache.json.get('dialog')
@@ -108,7 +113,7 @@ class ActOne extends Phaser.Scene {
         this.typeText(this.scenePhase)
     }
 
-    update() {
+    update() {        
         if(this.beerAcquired && this.caught && this.player.x >= this.screenWidth + 40 && !this.missionComplete) {
             this.missionComplete = true
             this.player.setVisible(false)
@@ -146,7 +151,7 @@ class ActOne extends Phaser.Scene {
         this.dialogSpeaker = this.dialog[0][scenePhase]['speaker'] // conversation, line, speaker
 
         // build dialog (concatenate speaker + colon + line of text)
-        this.combinedDialog = this.dialog[0][scenePhase]['speaker'].toUpperCase() + ': ' + this.dialog[0][scenePhase]['dialog']
+        this.combinedDialog = this.dialog[0][scenePhase]['speaker'] + ': ' + this.dialog[0][scenePhase]['dialog']
 
         // create a timer to iterate through each letter in the dialog text
         let currentChar = 0
